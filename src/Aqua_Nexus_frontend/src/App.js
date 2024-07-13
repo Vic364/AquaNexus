@@ -3,7 +3,7 @@ import { Aqua_Nexus_backend } from 'declarations/Aqua_Nexus_backend';
 import logo from './logo2.svg';
 
 class App {
-  greeting = '';
+  aqua = '';
   cultivos = [];
   logs = [];
 
@@ -19,20 +19,20 @@ class App {
     const presion = BigInt(document.getElementById('presion').value);
     const estado = document.getElementById('estado').value;
 
-    await custom_greeting2_backend.agregarCultivo({
+    await Aqua_Nexus_backend.agregarCultivo({
       idCultivo,
       humedad,
       presion,
       estado
     });
 
-    this.cultivos = await custom_greeting2_backend.obtenerCultivos();
+    this.cultivos = await Aqua_Nexus_backend.obtenerCultivos();
     this.#render();
   };
 
   // Método para manejar la obtención de cultivos
   #handleGetCultivos = async () => {
-    this.cultivos = await custom_greeting2_backend.obtenerCultivos();
+    this.cultivos = await Aqua_Nexus_backend.obtenerCultivos();
     this.#render();
   };
 
@@ -44,7 +44,7 @@ class App {
     const presion = BigInt(document.getElementById('updatePresion').value);
     const estado = document.getElementById('updateEstado').value;
 
-    const success = await custom_greeting2_backend.actualizarCultivo({
+    const success = await Aqua_Nexus_backend.actualizarCultivo({
       idCultivo,
       humedad,
       presion,
@@ -52,7 +52,7 @@ class App {
     });
 
     alert(success ? 'Cultivo actualizado' : 'Error al actualizar cultivo');
-    this.cultivos = await custom_greeting2_backend.obtenerCultivos();
+    this.cultivos = await Aqua_Nexus_backend.obtenerCultivos();
     this.#render();
   };
 
@@ -60,49 +60,10 @@ class App {
   #handleDeleteCultivo = async (e) => {
     e.preventDefault();
     const idCultivo = BigInt(document.getElementById('deleteIdCultivo').value);
-    const result = await custom_greeting2_backend.eliminarCultivo(idCultivo);
+    const result = await Aqua_Nexus_backend.eliminarCultivo(idCultivo);
 
     alert(result);
-    this.cultivos = await custom_greeting2_backend.obtenerCultivos();
-    this.#render();
-  };
-
-  // Método para manejar la adición de un log
-  #handleAddLog = async (e) => {
-    e.preventDefault();
-    const idCultivo = BigInt(document.getElementById('logIdCultivo').value);
-    const fechaRiego = document.getElementById('fechaRiego').value;
-    const surco = BigInt(document.getElementById('surco').value);
-    const detalles = document.getElementById('detalles').value;
-
-    await custom_greeting2_backend.agregarLog(idCultivo, {
-      fechaRiego,
-      surco,
-      detalles
-    });
-
-    this.logs = await custom_greeting2_backend.obtenerLogsPorCultivo(idCultivo);
-    this.#render();
-  };
-
-  // Método para manejar la obtención de logs
-  #handleGetLogs = async (e) => {
-    e.preventDefault();
-    const idCultivo = BigInt(document.getElementById('logIdCultivo').value);
-    this.logs = await custom_greeting2_backend.obtenerLogsPorCultivo(idCultivo);
-    this.#render();
-  };
-
-  // Método para manejar la eliminación de un log
-  #handleDeleteLog = async (e) => {
-    e.preventDefault();
-    const idCultivo = BigInt(document.getElementById('deleteLogIdCultivo').value);
-    const fechaRiego = document.getElementById('deleteFechaRiego').value;
-
-    const success = await custom_greeting2_backend.eliminarLog(idCultivo, fechaRiego);
-    alert(success ? 'Log eliminado' : 'Error al eliminar log');
-
-    this.logs = await custom_greeting2_backend.obtenerLogsPorCultivo(idCultivo);
+    this.cultivos = await Aqua_Nexus_backend.obtenerCultivos();
     this.#render();
   };
 
@@ -149,15 +110,7 @@ class App {
           <button type="submit">Actualizar</button>
         </form>
 
-        <!-- Formulario para eliminar cultivo -->
-        <form id="deleteCultivoForm" action="#">
-          <h3>Eliminar Cultivo</h3>
-          <label for="deleteIdCultivo">ID Cultivo: </label>
-          <input id="deleteIdCultivo" type="text" /><br />
-          <button type="submit">Eliminar</button>
-        </form>
-
-        <section id="greeting">${this.greeting}</section>
+        <section id="aqua">${this.aqua}</section>
       </main>
     `;
     render(body, document.getElementById('root'));
@@ -166,7 +119,6 @@ class App {
     document.getElementById('addCultivoForm').addEventListener('submit', this.#handleAddCultivo);
     document.getElementById('getCultivosBtn').addEventListener('click', this.#handleGetCultivos);
     document.getElementById('updateCultivoForm').addEventListener('submit', this.#handleUpdateCultivo);
-    document.getElementById('deleteCultivoForm').addEventListener('submit', this.#handleDeleteCultivo);
   }
 }
 
