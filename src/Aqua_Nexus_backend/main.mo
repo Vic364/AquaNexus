@@ -132,7 +132,7 @@ actor {
       Iter.map(alertas.vals(), func(alerta: Alerta) : Text {
         switch (cultivos.get(alerta.idCultivo)) {
           case (?cultivo) {
-            return "idAlerta: " # Nat.toText(alerta.idAlerta) # ", idCultivo: " # Nat.toText(alerta.idCultivo) # ", informacion: " # alerta.informacion # " (Estado: " # cultivo.estado # ", Presion: " # Nat.toText(cultivo.presion) # ", Humedad: " # Nat.toText(cultivo.humedad) # ")";
+            return "idAlerta: " # Nat.toText(alerta.idAlerta) # ", idCultivo: " # Nat.toText(alerta.idCultivo) # ", informacion: " # alerta.informacion # " (Presion: " # Nat.toText(cultivo.presion) # ", Humedad: " # Nat.toText(cultivo.humedad) # ")";
           };
           case (null) {
             return "idAlerta: " # Nat.toText(alerta.idAlerta) # ", idCultivo: " # Nat.toText(alerta.idCultivo) # ", informacion: " # alerta.informacion # " (Cultivo no encontrado)";
